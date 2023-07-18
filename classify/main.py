@@ -1,6 +1,3 @@
-import sys
-sys.path.append('/home/hailongzhang/jones/')
-
 import torch
 import torch.nn as nn
 import os
@@ -24,7 +21,6 @@ transformer = torchvision.transforms.Compose([
                                      std=[0.229, 0.224, 0.225])
 ])
 
-
 #tobacco_hainan
 transformer_hainan = torchvision.transforms.Compose([
     torchvision.transforms.Resize(size=(256, 256)),
@@ -33,8 +29,6 @@ transformer_hainan = torchvision.transforms.Compose([
     torchvision.transforms.Normalize(mean=[0.485, 0.456, 0.406],
                                      std=[0.229, 0.224, 0.225])
 ])
-
-
 
 #kaggle
 transformer_kaggle = torchvision.transforms.Compose([
@@ -54,8 +48,8 @@ transformer_hand_written_digits = torchvision.transforms.Compose([
     #                                  std=[0.229, 0.224, 0.225])
 ])
 
-
-os.environ["CUDA_VISIBLE_DEVI" "CES"] = "0"
+os.environ["CUDA_VISIBLE_DEVI"
+           "CES"] = "0"
 # train_path = '/home/hailongzhang/DataSets/train_test_barbecue/'
 train_path = '/home/yuki/DataSets/classify/dogs_cats/train'
 # train_path = '/home/hailongzhang/DataSets/hand_written_digits/all_imgs'
@@ -65,7 +59,10 @@ train_path = '/home/yuki/DataSets/classify/dogs_cats/train'
 train = ImageFolder(train_path, transformer_kaggle)
 # train = HandWrittenData(train_path, transform=transformer_hand_written_digits)
 train_num = int(len(train) * 0.8)
-train_set, test_set = Data.random_split(dataset=train, lengths=[train_num, len(train) - train_num], generator=torch.Generator().manual_seed(0))
+train_set, test_set = Data.random_split(
+    dataset=train,
+    lengths=[train_num, len(train) - train_num],
+    generator=torch.Generator().manual_seed(0))
 train_loader = Data.DataLoader(train_set, batch_size=16, shuffle=True, num_workers=8)
 test_loader = Data.DataLoader(test_set, batch_size=16, shuffle=True, num_workers=8)
 
@@ -91,7 +88,6 @@ print(test_model)
 # test_model = torchvision.models.AlexNet(num_classes=10)
 # test_model = torchvision.models.alexnet(pretrained=True)
 
-
 writer = SummaryWriter(log_dir='log/resnet34_256', comment='recorder')
 test_model = nn.DataParallel(test_model)
 test_model = test_model.cuda()
@@ -102,7 +98,9 @@ EPOCH = 50
 # torch.nn.init.kaiming_uniform_()
 # opt = torch.optim.Adam(test_model.module.classifier[6].parameters(), lr=lr)
 # opt = torch.optim.SGD(test_model.module.parameters(), lr=lr, momentum=0.9)
-opt = torch.optim.Adam(filter(lambda p: p.requires_grad, test_model.module.parameters()), lr=lr)
+opt = torch.optim.Adam(filter(lambda p: p.requires_grad,
+                              test_model.module.parameters()),
+                       lr=lr)
 scheduler = torch.optim.lr_scheduler.ExponentialLR(opt, gamma=0.98)
 test_model.train()
 
@@ -129,69 +127,14 @@ for turn in range(EPOCH):
                 pred = test_model(test_x)
                 test_nums += pred.size(0)
                 pred = torch.max(pred, 1)[1]
-                test_correct += (pred==test_y).sum()
+                test_correct += (pred == test_y).sum()
             acc = test_correct / test_nums
             print('EPOCH: %d, loss: %.4f, acc: %.3f' % (turn, loss, acc))
             if acc > 0.5 and turn > 10:
-                torch.save(test_model.module.state_dict(), '/home/hailongzhang/Models/c_classifier.pth')
+                torch.save(test_model.module.state_dict(),
+                           '/home/hailongzhang/Models/c_classifier.pth')
         test_model.train()
     writer.add_scalar('loss', loss, turn)
     writer.add_scalar('acc', acc, turn)
     scheduler.step()
-# torch.save(test_model.module.state_dict(), '/home/hailongzhang/Models/c_classifier.pth')
-# torch.save(test_model.module.state_dict(), '/home/hailongzhang/Models/miscellaneous_baked_param.pth')
-# torch.save(test_model.module.state_dict(), '/home/hailongzhang/Models/resnet_dog_cat.pth')
 
-
-
-
-# visuable
-# import torch
-# from PIL import Image
-# from glob import glob
-# import os
-# import tensorboard
-# import torch.nn as nn
-# from torchvision.utils import make_grid
-# from torch.utils.tensorboard import SummaryWriter
-#
-# linear = nn.Linear(784, 10)
-# linear.requires_grad_(False)
-# dummy_input = torch.flatten(torch.rand(1, 1, 28, 28), 1)
-#
-# linear.load_state_dict(torch.load('/home/qdrs/linear_written_digits.pkl'))
-# # for p in linear.parameters():
-# #     param = p.detach().cpu().numpy()
-# #     print(param)
-# writer = SummaryWriter('./log')
-# num = torch.tensor(1)
-# for epoch in range(100):
-#     t = torch.exp(num)
-#     num = num-0.1
-#     # writer.add_scalar('value', t, epoch)
-#
-# a = linear.weight
-# for i in range(a.size(0)):
-#     max = torch.max(a[i, :])
-#     min = torch.min(a[i, :])
-#     a[i, :] -= min
-#     a[i, :] *= 255
-#     a[i, :] /= (max - min + 0.00000001)
-#
-# a = a.resize(10, 28, 28)
-#
-# a = a.numpy()
-#
-# import numpy as np
-# a = np.array(a, dtype=np.uint8)
-# # a.imshow()
-# cv2.imshow('11', a[7, :, ])
-# cv2.waitKey(0)
-# # plt.imshow(a, cmap=0)
-#
-# # writer.add_images('channels', make_grid(param, padding=20, normalize=True, scale_each=True, pad_value=1 ), dataformats='CHW')
-#
-# # with SummaryWriter(comment='nn.Linear') as w:
-#     # w.add_graph(linear, (dummy_input,))
-#
-# writer.close()
