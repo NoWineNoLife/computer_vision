@@ -1,20 +1,23 @@
-import torch
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
+# @author  : tsing
+# @time    : 2023/7/27 下午5:34
+# @function: the script is used to do something.
 import torch.nn as nn
-import torch.nn.functional as F
-import torchvision.models
+import torchvision
 
 
 class ResNet(nn.Module):
-    def __init__(self, num_classes=2):
+    def __init__(self, a_cfg=None):
         super(ResNet, self).__init__()
         net = torchvision.models.resnet34(pretrained=False)
-        net.load_state_dict(torch.load('/home/hailongzhang/Models/resnet34-b627a593.pth'))
         net.fc = nn.Sequential()
         for param in self.parameters():
             param.requires_grad = False
 
         self.feafures = net
-        self.fc = nn.Linear(512, num_classes)
+        self.classes_num = a_cfg.get('classes_num')
+        self.fc = nn.Linear(512, self.classes_num)
 
     def forward(self, x):
         x = self.feafures(x)
