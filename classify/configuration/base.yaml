@@ -1,0 +1,26 @@
+neural_network:
+  category: "LeNet"
+  pretrained: true
+  weight: ''
+  classes_num: 2
+
+optimizer:
+  category: "SGD"
+  lr: 0.001
+
+dataset:
+  name: "HandWrittenData"
+  train:
+    imgs_path: "."
+    map_file: ''
+    transform:
+  eval:
+
+loss_fn:
+  "CrossEntropyLoss"
+
+device:
+  'cuda:0'
+output:
+
+  ''
