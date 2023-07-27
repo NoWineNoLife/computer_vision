@@ -9,7 +9,7 @@ import torch
 import torch.utils.data as Data
 from PIL import Image
 
-from access_util import get_properties, get_transforms
+from .access_util import get_properties, get_transforms
 
 
 class HandWrittenData(Data.Dataset):

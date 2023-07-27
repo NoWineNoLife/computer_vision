@@ -22,7 +22,7 @@ class LeNet(nn.Module):
         self.conv1 = nn.Conv2d(in_channels=3, out_channels=6, kernel_size=5, stride=1, padding=2)
         self.maxpool = nn.MaxPool2d(kernel_size=2, stride=2)
         self.conv2 = nn.Conv2d(in_channels=6, out_channels=16, kernel_size=5, stride=1, padding=0)
-        self.adaptpool = nn.AdaptiveAvgPool2d(5, 5)
+        self.adaptpool = nn.AdaptiveAvgPool2d((5, 5))
         self.fc1 = nn.Linear(5 * 5 * 16, 120)
         self.fc2 = nn.Linear(120, 84)
         self.fc3 = nn.Linear(84, self.classes_num)
