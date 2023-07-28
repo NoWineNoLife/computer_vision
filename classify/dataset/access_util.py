@@ -1,9 +1,12 @@
 #!/usr/bin/python
-# -*- coding:utf-8 -*-
-# @author  : tsing
-# @time    : 2023/7/27 下午3:58
-# @function: the script is used to do something.
+# -*- coding = uft-8 -*-
+#  * @file           : ttt.py
+#  * @author         : tsing
+#  * @brief          : None
+#  * @attention      : None
+#  * @date           : 2023/7/27
 import torchvision.transforms as T
+
 
 def get_properties(a_cfg):
     imgs_path = a_cfg.get('imgs_path')
@@ -20,11 +23,20 @@ def get_properties(a_cfg):
     return imgs_path, filename_list, labels
 
 
-def get_transforms(a_cfg):
+def preprocess(a_cfg):
+    # TODO: Add implementation here
+
+    pass
+
+
+def transform_img(a_cfg):
+    # TODO: Add implementation here
+
     transf = T.Compose(
         T.ToTensor()
     )
     return transf
+
 
 if __name__ == '__main__':
     cfg = {

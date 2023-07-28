@@ -9,7 +9,7 @@ import torch
 import torch.utils.data as Data
 from PIL import Image
 
-from .access_util import get_properties, get_transforms
+from .access_util import get_properties, transform_img, preprocess
 
 
 class HandWrittenData(Data.Dataset):
@@ -19,12 +19,19 @@ class HandWrittenData(Data.Dataset):
         self.imgs_filename = None
         self.labels = None
         self.transform = None
-        if a_train_flag is True:
+        if a_cfg.get('split_manual'):
+            # TODO: Add implementation here
+
+            pass
+
+
+
+        if a_train_flag is True :
             self.imgs_path, self.imgs_filename, self.labels = get_properties(a_cfg['train'])
-            self.transform = get_transforms(a_cfg)
+            self.transform = transform_img(a_cfg)
         else:
             self.imgs_path, self.imgs_filename, self.labels = get_properties(a_cfg['eval'])
-            self.transform = get_transforms(a_cfg)
+            self.transform = transform_img(a_cfg)
 
     def __len__(self):
         return len(self.imgs_filename)

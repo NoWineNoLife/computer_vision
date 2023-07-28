@@ -18,6 +18,8 @@ from neural_network.lenet import LeNet
 from dataset.hand_written_dataset import HandWrittenData
 
 parser = argparse.ArgumentParser()
+
+
 def arg_parse():
     parser.add_argument("--yaml_path", default='configuration/base.yaml')
     return parser
@@ -33,5 +35,3 @@ if __name__ == '__main__':
     loss_fn = eval(config['loss_fn'])()
     train_dataset = eval(config['dataset']['name'])(config['dataset'], True)
     test_dataset = eval(config['dataset']['name'])(config['dataset'], False)
-
-

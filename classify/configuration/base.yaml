@@ -10,13 +10,21 @@ optimizer:
 
 dataset:
   name: "HandWrittenData"
+  split_manual: true     # if true, then eval is valid
   train:
-    imgs_path: "/home/yuki/datasets/classify/dogs_cats/train/images"
-    map_file: '/home/yuki/datasets/classify/dogs_cats/train/labels'
+    imgs_path: "/home/hozumi/datasets/classify/dogs_cats/train/images"
+    map_file: '/home/hozumi/datasets/classify/dogs_cats/train/labels'
+    pre_process:
+      size:
+        --640
+         -640
+
     transform:
+      totensor: true
+
   eval:
-    imgs_path: "/home/yuki/datasets/classify/dogs_cats/eval/images"
-    map_file: '/home/yuki/datasets/classify/dogs_cats/eval/labels'
+    imgs_path: "/home/hozumi/datasets/classify/dogs_cats/eval/images"
+    map_file: '/home/hozumi/datasets/classify/dogs_cats/eval/labels'
 loss_fn:
   "CrossEntropyLoss"
 
