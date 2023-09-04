@@ -18,7 +18,7 @@ from glob import glob
 
 if __name__ == "__main__":
     current_path = os.path.dirname(os.path.abspath(__file__))
-    yaml_file = os.path.join(current_path, "config", "mallampati.yaml")
+    yaml_file = os.path.join(current_path, "config", "kaggle_car.yaml")
     with open(yaml_file, 'r') as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
 
@@ -62,8 +62,6 @@ if __name__ == "__main__":
                 cv2.fillPoly(img_mask, [contour_converted], idx)
             except:
                 print("could not find label")
-
-    print(config)
 
 
 
