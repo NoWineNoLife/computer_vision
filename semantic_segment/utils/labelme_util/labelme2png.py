@@ -9,8 +9,6 @@
 import os
 import json
 import cv2
-import sys
-import random
 import yaml
 import numpy as np
 from glob import glob
@@ -41,7 +39,7 @@ if __name__ == "__main__":
         json_data = json.loads(json_file.read())
 
         img_name = os.path.splitext(os.path.basename(json_name))[0]
-        img_file = str(json_file).replace("json", "jpg")
+        img_file = str(json_name).replace("json", "jpg")
         img = cv2.imread(img_file)
         img_h, img_w, _ = img.shape
 
@@ -62,6 +60,10 @@ if __name__ == "__main__":
                 cv2.fillPoly(img_mask, [contour_converted], idx)
             except:
                 print("could not find label")
+
+            base_name = os.path.basename(img_file)
+            store_dir = os.path.join(store_path, base_name.replace("jpg", "png"))
+            cv2.imwrite(store_dir, img_mask)
 
 
 
