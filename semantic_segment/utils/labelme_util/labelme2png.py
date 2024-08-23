@@ -11,12 +11,12 @@ import json
 import cv2
 import yaml
 import numpy as np
+import shutil
 from glob import glob
-
 
 if __name__ == "__main__":
     current_path = os.path.dirname(os.path.abspath(__file__))
-    yaml_file = os.path.join(current_path, "config", "kaggle_car.yaml")
+    yaml_file = os.path.join(current_path, "config", "mallampati.yaml")
     with open(yaml_file, 'r') as f:
         config = yaml.load(f, Loader=yaml.FullLoader)
 
@@ -58,21 +58,12 @@ if __name__ == "__main__":
             try:
                 idx = labels.index(shape["label"]) + 1
                 cv2.fillPoly(img_mask, [contour_converted], idx)
+                # cv2.imshow("11", img_mask)
+                # cv2.waitKey(0)
             except:
-                print("could not find label")
+                print("could not find label: {}".format(shape["label"]))
 
             base_name = os.path.basename(img_file)
+            shutil.copy(img_file, os.path.join(store_path, base_name))
             store_dir = os.path.join(store_path, base_name.replace("jpg", "png"))
             cv2.imwrite(store_dir, img_mask)
-
-
-
-
-
-
-
-
-
-
-
-

@@ -18,7 +18,6 @@ import torchvision.transforms as T
 
 from semantic_segment.dataset.mallampti import Mallampti
 
-
 os.environ["CUDA_VISIBLE_DEVI" "CES"] = "0"
 
 transformer_penn = T.Compose([
@@ -69,17 +68,8 @@ for val_x, val_y in train_loader:
     gray_img = gray_img.astype(np.uint8)
     _, gray_img = cv2.threshold(gray_img, 0, 255, cv2.THRESH_BINARY)
 
-
-
     cv2.imshow("11", gray_img)
     cv2.waitKey(0)
-
-
-
-
-
-
-
 
 # for turn in range(EPOCH):
 #     for (train_x, train_y) in train_loader:
