@@ -14,8 +14,8 @@ import argparse
 
 from torch.optim import SGD
 from torch.nn import CrossEntropyLoss
-from neural_network.lenet import LeNet
-from dataset.hand_written_dataset import HandWrittenData
+from classify.dataset.hand_written_dataset import HandWrittenData
+from classify.neural_network.resnet import ResNet
 
 parser = argparse.ArgumentParser()
 
