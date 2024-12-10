@@ -1,0 +1,10 @@
+base:
+  "base.yaml"
+
+dataset:
+  json_regex: "/home/hozumi/datasets/upper_lip_bite/inter/*.json"
+  store_path: "/home/hozumi/datasets/upper_lip_bite/inter/"
+
+labels:
+  - upper_lip
+  - lower_teeth

@@ -1,0 +1,6 @@
+dataset:
+  image_regex: ""
+  json_regex: ""    # glob regex
+  store_path: ""    # glob regex
+
+labels:             # list
